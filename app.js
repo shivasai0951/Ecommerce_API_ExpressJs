@@ -18,12 +18,45 @@ const connectionString = 'mongodb+srv://sais31348:EMaUqKyOSUy2TD9Q@cluster0.vbax
 
 
 const options = {
+
+  autoIndex: false,
   serverSelectionTimeoutMS: 10000,
 };
 
-mongoose.connect(connectionString,options)
-  .then(() => console.log('Connected to MongoDB'))
-  .catch((err) => console.error('Could not connect to MongoDB', err));
+
+// Connect to MongoDB
+mongoose.connect(connectionString, options)
+  .then(() => {
+    console.log('Connected to MongoDB');
+  })
+  .catch((err) => {
+    console.error('Error connecting to MongoDB:', err.message);
+  });
+
+// Handle connection events
+mongoose.connection.on('connected', () => {
+  console.log('Mongoose connected to MongoDB');
+});
+
+mongoose.connection.on('error', (err) => {
+  console.error('Mongoose connection error:', err.message);
+});
+
+mongoose.connection.on('disconnected', () => {
+  console.log('Mongoose disconnected from MongoDB');
+});
+
+// If Node.js process ends, close mongoose connection
+process.on('SIGINT', () => {
+  mongoose.connection.close(() => {
+    console.log('Mongoose connection disconnected due to application termination');
+    process.exit(0);
+  });
+});
+
+// mongoose.connect(connectionString,options)
+//   .then(() => console.log('Connected to MongoDB'))
+//   .catch((err) => console.error('Could not connect to MongoDB', err));
 
   
 //EMaUqKyOSUy2TD9Q

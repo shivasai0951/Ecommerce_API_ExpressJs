@@ -31,8 +31,6 @@ app.get('/table/:number', (req, res) => {
   const number = parseInt(req.params.number);
   if (isNaN(number)) {
     return res.status(400).send('Invalid number');
-  }else if(number.toString!=""){
-    return res.status(400).send('Invalid number');
   }
 
   const table = {};

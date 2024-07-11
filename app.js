@@ -17,9 +17,11 @@ const connectionString = 'mongodb+srv://sais31348:EMaUqKyOSUy2TD9Q@cluster0.vbax
 //const connectionString = 'mongodb://127.0.0.1:27017/ecomerce';
 
 
+const options = {
+  serverSelectionTimeoutMS: 10000,
+};
 
-
-mongoose.connect(connectionString)
+mongoose.connect(connectionString,options)
   .then(() => console.log('Connected to MongoDB'))
   .catch((err) => console.error('Could not connect to MongoDB', err));
 

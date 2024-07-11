@@ -16,6 +16,9 @@ app.use(bodyParser.json());
 const connectionString = 'mongodb+srv://sais31348:EMaUqKyOSUy2TD9Q@cluster0.vbax5s4.mongodb.net/ecomerce';
 //const connectionString = 'mongodb://127.0.0.1:27017/ecomerce';
 
+
+
+
 mongoose.connect(connectionString)
   .then(() => console.log('Connected to MongoDB'))
   .catch((err) => console.error('Could not connect to MongoDB', err));

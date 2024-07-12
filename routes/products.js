@@ -75,4 +75,24 @@ route.post('/',(req,res)=>{
     newProduct.save().then(products=>res.json(products))
 });
 
+
+// @route   PUT api/products/:id
+// @desc    Update An Item
+// @access  Public
+route.put('/:id', (req, res) => {
+    products.findByIdAndUpdate(req.params.id, req.body, { new: true })
+        .then(item => res.json(products))
+        .catch(err => res.status(404).json({ success: false }));
+});
+
+// @route   DELETE api/items/:id
+// @desc    Delete An Item
+// @access  Public
+route.delete('/:id', (req, res) => {
+    products.findById(req.params.id)
+        .then(item => item.remove().then(() => res.json({ success: true })))
+        .catch(err => res.status(404).json({ success: false }));
+});
+
+
 module.exports = route; 

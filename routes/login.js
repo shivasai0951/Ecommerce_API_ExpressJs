@@ -38,8 +38,4 @@ router.delete('/:id',(req,res)=>{
     .catch(erroe=>res.status(404).json({success:false}))
 })
 
-
-
-
-
 module.exports = router; 

@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const items = require('./routes/items'); // Ensure this path is correct
 const login = require('./routes/login'); // Ensure this path is correct
 const products = require('./routes/products'); // Ensure this path is correct
+const todo = require('./routes/todoList'); // Ensure this path is correct
 
 const app = express();
 
@@ -14,16 +15,17 @@ app.use(bodyParser.json());
 
 // Replace 'your-connection-string' with your actual MongoDB connection string
 const connectionString = 'mongodb+srv://sais31348:EMaUqKyOSUy2TD9Q@cluster0.vbax5s4.mongodb.net/ecomerce';
+//mongodb+srv://sais31348:<password>@cluster0.9hu4mvt.mongodb.net/
 //const connectionString = 'mongodb://127.0.0.1:27017/ecomerce';
 
 
 // Mongoose connection options
-const options = {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-};
+// const options = {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+// };
 
-mongoose.connect(connectionString, options)
+mongoose.connect(connectionString)
   .then(() => {
     console.log('Connected to MongoDB');
   })
@@ -41,8 +43,9 @@ mongoose.connect(connectionString, options)
 //EMaUqKyOSUy2TD9Q
 // Use Routes
 app.use('/api/items', items);
-app.use('/api/login', login);
+app.use('/api/login', login);//todo
 app.use('/api/products', products);
+app.use('/api/todo', todo);
 
 app.get('/table/:number', (req, res) => {
   const number = parseInt(req.params.number);

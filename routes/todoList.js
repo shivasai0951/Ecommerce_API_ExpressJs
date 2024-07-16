@@ -30,7 +30,7 @@ route.post('/',(req,res)=>{
 // @access  Public
 route.put('/:id', (req, res) => {
     todolist.findByIdAndUpdate(req.params.id, req.body, { new: true })
-        .then(item => res.json(todolist))
+        .then(todolist => res.json(todolist))
         .catch(err => res.status(404).json({ success: false }));
 });
 
@@ -39,8 +39,15 @@ route.put('/:id', (req, res) => {
 // @access  Public
 route.delete('/:id', (req, res) => {
     todolist.findById(req.params.id)
-        .then(item => item.remove().then(() => res.json({ success: true })))
-        .catch(err => res.status(404).json({ success: false }));
+        .then(todoitem =>{
+            console.log(todoitem);
+            todoitem.remove().then(() => res.json({ success: true }))
+        })
+        .catch(err =>{
+            console.log(err);
+            res.status(404).json({ success: false });
+
+        });
 });
 
 

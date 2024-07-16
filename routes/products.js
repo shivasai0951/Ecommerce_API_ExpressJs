@@ -81,7 +81,7 @@ route.post('/',(req,res)=>{
 // @access  Public
 route.put('/:id', (req, res) => {
     products.findByIdAndUpdate(req.params.id, req.body, { new: true })
-        .then(item => res.json(products))
+        .then(value => res.json(value))
         .catch(err => res.status(404).json({ success: false }));
 });
 
@@ -90,8 +90,22 @@ route.put('/:id', (req, res) => {
 // @access  Public
 route.delete('/:id', (req, res) => {
     products.findById(req.params.id)
-        .then(item => item.remove().then(() => res.json({ success: true })))
-        .catch(err => res.status(404).json({ success: false }));
+        .then(product => {
+            console.log(req.params.id);
+            if (!product) {
+                return res.status(404).json({ success: false, message: 'Product not found' });
+            }
+           try{
+            product.deleteOne().then(()=>res.json({ success: true, message: 'Product deleted' }));
+           }catch(err){
+            console.log(err);
+           }
+            //res =>{res.json({ success: true, message: 'Product deleted' })};
+        })
+       // .then(item => item.remove().then(() => res.json({success: true })))
+        .catch(err=>{
+            res.status(500).json({ success: false, message: 'Server error' });
+        });
 });
 
 

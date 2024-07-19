@@ -49,9 +49,18 @@
 
 
 const express = require('express');
-const route =express.Router();
-
+const mongoose = require('mongoose');
+const multer = require('multer');
+const { GridFsStorage } = require('multer-gridfs-storage');
+const Grid = require('gridfs-stream');
+const crypto = require('crypto');
+const path = require('path');
 const products = require('../models/products'); 
+const route = express.Router();
+
+
+
+
 
 // @route   GET api/items
 // @desc    Get All Items
@@ -62,19 +71,21 @@ route.get('/', (req, res) => {
         .then(products => res.json(products));
 });
 
-
-
 route.post('/',(req,res)=>{
-    const newProduct =new products({
-        productId:req.body.productId,
-        ProductName:req.body.ProductName,
-        ProductPrice:req.body.ProductPrice,
-        ProductImage:req.body.ProductImage,
+    try {
+        const newProduct = new products({
+          productId: req.body.productId,
+          ProductName: req.body.ProductName,
+          ProductPrice: req.body.ProductPrice,
+          ProductImage: req.body.ProductImage,
+        });
+    
+        newProduct.save().then(products => res.json(products));
+      } catch (err) {
+        console.error('Error parsing JSON:', err.message);
+        res.status(400).json({ error: 'Invalid JSON' });
+      }
     });
-
-    newProduct.save().then(products=>res.json(products))
-});
-
 
 // @route   PUT api/products/:id
 // @desc    Update An Item
@@ -91,7 +102,6 @@ route.put('/:id', (req, res) => {
 route.delete('/:id', (req, res) => {
     products.findById(req.params.id)
         .then(product => {
-            console.log(req.params.id);
             if (!product) {
                 return res.status(404).json({ success: false, message: 'Product not found' });
             }
@@ -100,9 +110,7 @@ route.delete('/:id', (req, res) => {
            }catch(err){
             console.log(err);
            }
-            //res =>{res.json({ success: true, message: 'Product deleted' })};
         })
-       // .then(item => item.remove().then(() => res.json({success: true })))
         .catch(err=>{
             res.status(500).json({ success: false, message: 'Server error' });
         });

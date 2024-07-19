@@ -13,9 +13,23 @@ router.get('/',(req,res)=>{
 
 ///Post api
 router.post('/',(req,res)=>{
-    const newlogin=new login({email: req.body.email,password:req.body.password});
+    const newlogin=new login({email: req.body.email,password:req.body.password,type:req.body.type});
     newlogin.save().then(login=>res.json(login));
 })
+
+
+router.get('/:email', async (req, res) => {
+    try {
+        const loginRes = await login.findOne({ email: req.params.email });
+        console.log(loginRes);
+        if (!loginRes) {
+            return res.status(404).json({ success: false, message: 'No User Found' });
+        }
+        res.json(loginRes);
+    } catch (e) {
+        res.status(400).json({ Result: 'An error occurred', error: e.message });
+    }
+});
 
 ///Get single item 
 router.get('/:id',(req,res)=>{
@@ -33,9 +47,21 @@ router.put('/:id',(req,res)=>{
 
 ///Get single item 
 router.delete('/:id',(req,res)=>{
+
     login.findById(req.params.id)
-    .then(login=> login.remove().then(()=>res.json({success:true})))
-    .catch(erroe=>res.status(404).json({success:false}))
+    .then(productid => {
+        if (!productid) {
+            return res.status(404).json({ success: false, message: 'User not found' });
+        }
+       try{
+        productid.deleteOne().then(()=>res.json({ success: true, message: 'User deleted' }));
+       }catch(err){
+        console.log(err);
+       }
+    })
+    .catch(err=>{
+        res.status(500).json({ success: false, message: 'Server error' });
+    });
 })
 
 module.exports = router; 

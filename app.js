@@ -1,5 +1,9 @@
+
 const express = require('express');
 const mongoose = require('mongoose');
+const multer = require('multer');
+const fs = require('fs');
+const path = require('path');
 const bodyParser = require('body-parser');
 const items = require('./routes/items'); // Ensure this path is correct
 const login = require('./routes/login'); // Ensure this path is correct

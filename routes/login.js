@@ -13,7 +13,7 @@ router.get('/',(req,res)=>{
 
 ///Post api
 router.post('/',(req,res)=>{
-    const newlogin=new login({email: req.body.email,password:req.body.password,type:req.body.type});
+    const newlogin=new login({email: req.body.email,password:req.body.password,type:req.body.type,contact:req.body.contact,name:req.body.name});
     newlogin.save().then(login=>res.json(login));
 })
 

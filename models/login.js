@@ -14,7 +14,16 @@ const loginSchema = new Schema({
     type:{
         type: String,
         required: true 
-    }
+    },
+    name:{
+        type: String,
+        required: true 
+    },
+    contact:{
+        type: Number,
+        required: true 
+    },
+
 });
 
 module.exports = login = mongoose.model('login', loginSchema);

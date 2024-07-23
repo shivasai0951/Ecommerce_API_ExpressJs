@@ -8,12 +8,12 @@ const login=require('../models/login');
 
 ///Get api
 router.get('/',(req,res)=>{
-    login.find().sort({date:-1}).then(login=>res.json(login))
+    login.find().sort({date:-1}).then(login=>res.json(login)).catch(err=>console.log(err))
 })
 
 ///Post api
 router.post('/',(req,res)=>{
-    const newlogin=new login({email: req.body.email,password:req.body.password,type:req.body.type,contact:req.body.contact,name:req.body.name});
+    const newlogin=new login({email: req.body.email,password:req.body.password,type:req.body.type,Name:req.body.name,Contact:req.body.contact});
     newlogin.save().then(login=>res.json(login));
 })
 

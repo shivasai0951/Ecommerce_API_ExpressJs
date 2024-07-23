@@ -1,14 +1,13 @@
 
 const express = require('express');
 const mongoose = require('mongoose');
-const multer = require('multer');
-const fs = require('fs');
-const path = require('path');
 const bodyParser = require('body-parser');
-const items = require('./routes/books'); // Ensure this path is correct
-const login = require('./routes/login'); // Ensure this path is correct
-const products = require('./routes/products'); // Ensure this path is correct
-const todo = require('./routes/todoList'); // Ensure this path is correct
+
+///endpoint routes
+const items = require('./routes/books');
+const login = require('./routes/login'); 
+const products = require('./routes/products'); 
+const todo = require('./routes/todoList'); 
 
 const app = express();
 
@@ -16,18 +15,9 @@ const app = express();
 app.use(bodyParser.json());
 
 // Connect to MongoDB
-
 // Replace 'your-connection-string' with your actual MongoDB connection string
 const connectionString = 'mongodb+srv://sais31348:EMaUqKyOSUy2TD9Q@cluster0.vbax5s4.mongodb.net/ecomerce';
-//mongodb+srv://sais31348:<password>@cluster0.9hu4mvt.mongodb.net/
-//const connectionString = 'mongodb://127.0.0.1:27017/ecomerce';
 
-
-// Mongoose connection options
-// const options = {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// };
 
 mongoose.connect(connectionString)
   .then(() => {
@@ -39,12 +29,6 @@ mongoose.connect(connectionString)
 
 
 
-// mongoose.connect(connectionString,options)
-//   .then(() => console.log('Connected to MongoDB'))
-//   .catch((err) => console.error('Could not connect to MongoDB', err));
-
-  
-//EMaUqKyOSUy2TD9Q
 // Use Routes
 app.use('/api/books', items);
 app.use('/api/login', login);//todo

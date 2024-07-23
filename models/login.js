@@ -5,7 +5,8 @@ const Schema = mongoose.Schema;
 const loginSchema = new Schema({
     email: {
         type: String,
-        required: true
+        required: true,
+    
     },
     password: {
         type: String,
@@ -15,11 +16,11 @@ const loginSchema = new Schema({
         type: String,
         required: true 
     },
-    name:{
+    Name:{
         type: String,
         required: true 
     },
-    contact:{
+    Contact:{
         type: Number,
         required: true 
     },

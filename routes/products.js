@@ -78,6 +78,7 @@ route.post('/',(req,res)=>{
           ProductName: req.body.ProductName,
           ProductPrice: req.body.ProductPrice,
           ProductImage: req.body.ProductImage,
+          ProductCount:req.body.ProductCount
         });
     
         newProduct.save().then(products => res.json(products));

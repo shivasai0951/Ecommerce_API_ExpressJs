@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
 ///endpoint routes
-const items = require('./routes/books');
+const booksProducts = require('./routes/books');
 const login = require('./routes/login'); 
 const products = require('./routes/products'); 
 const orderRoutes = require('./routes/order');
@@ -28,12 +28,11 @@ mongoose.connect(connectionString)
   });
 
 
-
 // Use Routes
-app.use('/api/books', items);
+app.use('/api/books', booksProducts);
 app.use('/api/login', login);//todo
 app.use('/api/products', products);
-app.use('/api', orderRoutes);
+app.use('/api/', orderRoutes);
 
 
 app.get('/table/:number', (req, res) => {

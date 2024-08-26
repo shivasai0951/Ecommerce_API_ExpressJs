@@ -12,10 +12,7 @@ const loginSchema = new Schema({
         type: String,
         required: true
     },
-    type:{
-        type: String,
-        required: true 
-    },
+    type:{ type: String, enum: ['USERS', 'ADMIN'], default: 'USERS' },
     Name:{
         type: String,
         required: true 

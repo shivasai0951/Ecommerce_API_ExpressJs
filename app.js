@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const items = require('./routes/books');
 const login = require('./routes/login'); 
 const products = require('./routes/products'); 
-const todo = require('./routes/todoList'); 
+const orderRoutes = require('./routes/order');
 
 const app = express();
 
@@ -33,7 +33,7 @@ mongoose.connect(connectionString)
 app.use('/api/books', items);
 app.use('/api/login', login);//todo
 app.use('/api/products', products);
-app.use('/api/todo', todo);
+app.use('/api', orderRoutes);
 
 
 app.get('/table/:number', (req, res) => {

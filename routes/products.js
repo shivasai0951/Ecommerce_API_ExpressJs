@@ -71,14 +71,26 @@ route.get('/', (req, res) => {
         .then(products => res.json(products));
 });
 
+// Get product by ID
+route.get('/products/:productId', async (req, res) => {
+    try {
+        const product = await Products.findById(req.params.productId);
+        if (!product) return res.status(404).json({ message: 'Product not found' });
+        res.json(product);
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching product', error });
+    }
+});
+
+
 route.post('/',(req,res)=>{
     try {
         const newProduct = new products({
-          productId: req.body.productId,
-          ProductName: req.body.ProductName,
-          ProductPrice: req.body.ProductPrice,
-          ProductImage: req.body.ProductImage,
-          ProductCount:req.body.ProductCount
+            ProductDescription:req.body.ProductDescription,
+            ProductName: req.body.ProductName,
+            ProductPrice: req.body.ProductPrice,
+            ProductImage: req.body.ProductImage,
+            ProductStock:req.body.ProductStock
         });
     
         newProduct.save().then(products => res.json(products));

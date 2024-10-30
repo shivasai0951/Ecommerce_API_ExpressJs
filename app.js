@@ -3,23 +3,23 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
+require("dotenv").config();
+
+
+
 ///endpoint routes
-const booksProducts = require('./routes/books');
 const login = require('./routes/login'); 
-const products = require('./routes/products'); 
-const orderRoutes = require('./routes/order');
+
 
 const app = express();
 
 // Middleware
 app.use(bodyParser.json());
 
-// Connect to MongoDB
-// Replace 'your-connection-string' with your actual MongoDB connection string
-const connectionString = 'mongodb+srv://sais31348:EMaUqKyOSUy2TD9Q@cluster0.vbax5s4.mongodb.net/ecomerce';
+///mongo connection 
+const mongoConnection  = process.env.connectionString.toString();
 
-
-mongoose.connect(connectionString)
+mongoose.connect(mongoConnection)
   .then(() => {
     console.log('Connected to MongoDB');
   })
@@ -28,11 +28,11 @@ mongoose.connect(connectionString)
   });
 
 
-// Use Routes
-app.use('/api/books', booksProducts);
+
+
+///routers
 app.use('/api/login', login);//todo
-app.use('/api/products', products);
-app.use('/api/', orderRoutes);
+
 
 
 app.get('/table/:number', (req, res) => {
